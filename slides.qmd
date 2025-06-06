@@ -1,0 +1,69 @@
+---
+title: "Análise de Dados de 4 Combinadores para Previsão de Séries Temporais"
+ 
+lang: pt
+date: 06/06/2025
+
+author:
+  - name: Rodolfo Viegas de Albuquerque
+    affiliation:
+      - id: upe
+        name: Universidade de Pernambuco
+
+  - name: Prof. Dr. João Fausto Lorenzato de Oliveira
+    affiliation: 
+      - id: upe
+
+format: revealjs
+
+---
+
+
+## Agenda
+
+- Introdução
+- Motivação e Objetivos
+- Fundamentação Teórica
+- Metodologia
+- Analise de Resultados
+- Conclusão
+
+
+## Introdução
+
+- Eat eggs
+- Drink coffee
+
+# Motivação e Objetivos
+
+## Motivação
+## Objetivo Geral
+## Objetivos Específicos
+
+
+
+
+
+
+
+
+# Fundamentação Teórica
+
+## Média Aritmética
+
+## Mediana
+
+## Média Ponderada
+
+## *Stacking*
+
+
+# Metodologia
+
+## Metodo Proposto
+
+## *Feature Importance*
+
+## Extremely Randomized Trees
+
+# Analise de Resultados
