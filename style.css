@@ -1,0 +1,19 @@
+.reveal .slide-logo {
+    height: 105px !important;
+    width: 105px !important;
+    max-width: unset !important;
+    max-height: unset !important;
+  }
+
+.reveal .title {
+    font-size: 1.3em;
+    color:rgb(36, 23, 218);
+  }
+
+.reveal .quarto-title-author-name {
+  font-size: 0.8em;
+}
+
+.reveal .date {
+  font-size: 0.8em;
+}

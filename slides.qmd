@@ -1,8 +1,15 @@
 ---
-title: "Análise de Dados de 4 Combinadores para Previsão de Séries Temporais"
- 
+title: "Análise Comparativa de Operadores de Combinações Heterogêneas para Previsão de Séries Temporais de Um Passo à Frente"
+
+title-slide-attributes:
+    data-background-image: ppgec_poli.png
+    data-background-size: 20% 
+    data-background-position: left 10% top 5%
+
+
 lang: pt
 date: 06/06/2025
+date-format: DD/MM/YYYY
 
 author:
   - name: Rodolfo Viegas de Albuquerque
@@ -14,7 +21,12 @@ author:
     affiliation: 
       - id: upe
 
-format: revealjs
+format: 
+  revealjs:
+    logo: ppgec_logo.png
+    css: style.css
+    slide-number: true
+
 
 ---
 
@@ -29,16 +41,59 @@ format: revealjs
 - Conclusão
 
 
-## Introdução
+# Introdução 
 
-- Eat eggs
-- Drink coffee
+## Importância dos Estudos de *Forecasting*
+
+:::: {.columns}
+::: {.column}
+- Governantes podem estimar melhor o orçamento
+- Gerenciamento de estoques
+- Demanda futura de energia
+:::
+::: {.column}
+- A tomada de decisão torna-se mais racional
+- A ciência se benecifia deste conhecimento
+:::
+::::
+
+## Busca por Modelos Melhores {auto-animate=true}
+
+::: {.incremental}
+- É necessário mais acurácia
+- Há duas formas de aumentá-la:
+  1. Selecionar o melhor modelo
+  2. Combinações
+  
+:::
+
+## {auto-animate=true}
+::: {style="margin-top: 10px;"}  
+A literatura da área recomenda a segunda alternativa
+:::
+## {auto-animate=true}
+::: {style="margin-top: 200px; font-size: 2em; color: blue;"} 
+A literatura da área recomenda a segunda alternativa
+:::
+
 
 # Motivação e Objetivos
 
-## Motivação
+
 ## Objetivo Geral
+
+Esta dissertação tem por objetivo geral a análise de dados dos resultados de quatro operadores de combinação para tarefas de previsão de séries temporais. Os combinadores são: média aritmética, mediana, stacking com SVR como meta-modelo e média ponderada com pesos estimados por features importance. Todos os combinadores analisados preveem 30 séries temporais de sazonalidade mensal, com previsão de um passo à frente.
+
 ## Objetivos Específicos
+
+::: {.incremental}
+1. Treinar os nove modelos: ARIMA, ETS, CES, Theta, TBATS, MLP, KNN, SVR e Random Forest;
+2. Gerar todas as possíveis combinações, sem repetições, de dois até nove
+métodos. Cada combinação receberá cada um dos quatro operadores para realizar previsões;
+3. Avaliar as combinação por meio das métricas RMSE e SMAPE;
+4. Os resultados analisados são agregados em número de quantidade de modelos nas combinações. Utilizou-se gráficos de linha, box plots e testes de hipótese para análise.
+:::
+## Motivação
 
 
 
