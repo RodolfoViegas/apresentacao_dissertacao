@@ -11,8 +11,7 @@
 
   <meta name="author" content="Rodolfo Viegas de Albuquerque">
   <meta name="author" content="Prof.&nbsp;Dr.&nbsp;João Fausto Lorenzato de Oliveira">
-  <meta name="dcterms.date" content="2025-06-06">
-  <title>Análise Comparativa de Operadores de Combinações Heterogêneas para Previsão de Séries Temporais de Um Passo à Frente</title>
+  <title>Uma Análise Comparativa de Operadores de Combinação em Ensembles Heterogêneos para Previsão de Séries Temporais</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -30,12 +29,34 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-  </style>
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
   <link rel="stylesheet" href="slides_files/libs/revealjs/dist/theme/quarto-f563837468303362081e247dddd440d0.css">
   <link rel="stylesheet" href="style.css">
   <link href="slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="slides_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="slides_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
   <link href="slides_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
@@ -130,7 +151,7 @@
     <div class="slides">
 
 <section id="title-slide" data-background-image="ppgec_poli.png" data-background-position="left 10% top 5%" data-background-size="20%" class="quarto-title-block center">
-  <h1 class="title">Análise Comparativa de Operadores de Combinações Heterogêneas para Previsão de Séries Temporais de Um Passo à Frente</h1>
+  <h1 class="title">Uma Análise Comparativa de Operadores de Combinação em <em>Ensembles</em> Heterogêneos para Previsão de Séries Temporais</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -151,16 +172,16 @@ Prof.&nbsp;Dr.&nbsp;João Fausto Lorenzato de Oliveira
     </div>
 </div>
 
-  <p class="date">06/06/2025</p>
+  <p class="date">29/07/2025</p>
 </section>
 <section id="agenda" class="slide level2">
 <h2>Agenda</h2>
 <ul>
 <li>Introdução</li>
-<li>Motivação e Objetivos</li>
+<li>Objetivos</li>
 <li>Fundamentação Teórica</li>
 <li>Metodologia</li>
-<li>Analise de Resultados</li>
+<li>Análise de Resultados</li>
 <li>Conclusão</li>
 </ul>
 </section>
@@ -169,82 +190,141 @@ Prof.&nbsp;Dr.&nbsp;João Fausto Lorenzato de Oliveira
 <h1>Introdução</h1>
 
 </section>
-<section id="importância-dos-estudos-de-forecasting" class="slide level2">
-<h2>Importância dos Estudos de <em>Forecasting</em></h2>
-<div class="columns">
-<div class="column">
+<section id="estudos-de-forecasting" class="slide level2">
+<h2>Estudos de <em>Forecasting</em></h2>
 <ul>
-<li>Governantes podem estimar melhor o orçamento</li>
-<li>Gerenciamento de estoques</li>
-<li>Demanda futura de energia</li>
+<li class="fragment"><p>Crescimento da tomada de decisão baseada em dados;</p></li>
+<li class="fragment"><p>Previsão de séries temporais como ferramenta crucial;</p></li>
+<li class="fragment"><p>Limitações dos modelos individuais;</p></li>
+<li class="fragment"><p>Combinações de previsões como alternativa para ganho de acurácia;</p></li>
+<li class="fragment"><p>Fenômeno <em>forecast combination puzzle</em> e o dilema da complexidade.</p></li>
 </ul>
-</div><div class="column">
-<ul>
-<li>A tomada de decisão torna-se mais racional</li>
-<li>A ciência se benecifia deste conhecimento</li>
-</ul>
-</div></div>
-</section>
-<section id="busca-por-modelos-melhores" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">Busca por Modelos Melhores</h2>
-<ul>
-<li class="fragment">É necessário mais acurácia</li>
-<li class="fragment">Há duas formas de aumentá-la:
-<ol type="1">
-<li class="fragment">Selecionar o melhor modelo</li>
-<li class="fragment">Combinações</li>
-</ol></li>
-</ul>
-</section>
-<section id="section" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title"></h2>
-<div style="margin-top: 10px;">
-<p>A literatura da área recomenda a segunda alternativa</p>
-</div>
-</section>
-<section id="section-1" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title"></h2>
-<div style="margin-top: 200px; font-size: 2em; color: blue;">
-<p>A literatura da área recomenda a segunda alternativa</p>
-</div>
-</section></section>
-<section>
-<section id="motivação-e-objetivos" class="title-slide slide level1 center">
-<h1>Motivação e Objetivos</h1>
-
+<aside class="notes">
+<p>1- Governos, operadores do mercado, varegistas, todos se valem de previsões de séries temporais;</p>
+<p>2- A literatura vem mostrando que a opção de combinar geralmente é a melhor forma de aumentar acuárcia.</p>
+<p>3 -A pesar desse fenômeno curioso, só podemos, então aplicar a média simples? Não há outras formas como mostraram os autores citados.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="objetivo-geral" class="slide level2">
 <h2>Objetivo Geral</h2>
-<p>Esta dissertação tem por objetivo geral a análise de dados dos resultados de quatro operadores de combinação para tarefas de previsão de séries temporais. Os combinadores são: média aritmética, mediana, stacking com SVR como meta-modelo e média ponderada com pesos estimados por features importance. Todos os combinadores analisados preveem 30 séries temporais de sazonalidade mensal, com previsão de um passo à frente.</p>
+<p>Analisar o desempenho de quatro combinares (média, mediana, operador proposto e SVR-stacking) para previsão de um passo à frente de séries temporais com sazonalidade mensal.</p>
 </section>
 <section id="objetivos-específicos" class="slide level2">
 <h2>Objetivos Específicos</h2>
 <ol type="1">
-<li class="fragment">Treinar os nove modelos: ARIMA, ETS, CES, Theta, TBATS, MLP, KNN, SVR e Random Forest;</li>
-<li class="fragment">Gerar todas as possíveis combinações, sem repetições, de dois até nove métodos. Cada combinação receberá cada um dos quatro operadores para realizar previsões;</li>
-<li class="fragment">Avaliar as combinação por meio das métricas RMSE e SMAPE;</li>
-<li class="fragment">Os resultados analisados são agregados em número de quantidade de modelos nas combinações. Utilizou-se gráficos de linha, box plots e testes de hipótese para análise.</li>
+<li class="fragment"><p>Comparar operadores (média, mediana, ponderada, <em>stacking</em>);</p></li>
+<li class="fragment"><p>Avaliar impacto do número de modelos nas combinações;</p></li>
+<li class="fragment"><p>Verificar robustez (desvio padrão) mediante o número de modelos adicionados;</p></li>
+<li class="fragment"><p>Avaliar método baseado em <em>feature importance</em>.</p></li>
 </ol>
-</section>
-<section id="motivação" class="slide level2">
-<h2>Motivação</h2>
 </section></section>
-<section>
 <section id="fundamentação-teórica" class="title-slide slide level1 center">
 <h1>Fundamentação Teórica</h1>
 
 </section>
-<section id="média-aritmética" class="slide level2">
-<h2>Média Aritmética</h2>
+
+<section>
+<section id="trabalhos-relacionados" class="title-slide slide level1 center">
+<h1>Trabalhos Relacionados</h1>
+<div style="font-size: 85%;">
+<ol type="1">
+<li>Alguns trabalhos usando operadores <strong>ponderados lineares</strong> conseguiram vencer a médias simples, como <span class="citation" data-cites="fforma">Montero-Manso et al. (<a href="#/referências" role="doc-biblioref" onclick="">2020</a>)</span>, <span class="citation" data-cites="kolassa2011">Kolassa (<a href="#/referências" role="doc-biblioref" onclick="">2011</a>)</span>, <span class="citation" data-cites="fiorucci2020groec">Fiorucci e Louzada (<a href="#/referências" role="doc-biblioref" onclick="">2020</a>)</span>, <span class="citation" data-cites="petropoulos2018bagging">Petropoulos, Hyndman, e Bergmeir (<a href="#/referências" role="doc-biblioref" onclick="">2018</a>)</span>.</li>
+<li>Com destaque para o trabalhos de <span class="citation" data-cites="fforma">Montero-Manso et al. (<a href="#/referências" role="doc-biblioref" onclick="">2020</a>)</span> que usou o XGBoost, que um <strong><em>ensemble</em> baseado em Árvores de Decisão</strong>, como modelos para estimar os pesos;</li>
+<li>O uso de FI é semelhante ao emprego dos coeficientes de regressão como pesos, mas há vantagens: <strong>sem multicolinearidade</strong> e <strong>lida melhor que outras formas de distribuições</strong>;</li>
+<li>O modelo ET lida bem com <strong>dados ruidosos</strong> (<span class="citation" data-cites="ghazwani2023computational">Ghazwani e Begum (<a href="#/referências" role="doc-biblioref" onclick="">2023</a>)</span>);</li>
+<li>E tem a <strong>variância menor</strong> que outros modelos como Random Forest <span class="citation" data-cites="geurts2006extratrees">Geurts, Ernst, e Wehenkel (<a href="#/referências" role="doc-biblioref" onclick="">2006</a>)</span>.</li>
+</ol>
+</div>
+<aside class="notes">
+<p>Alguns trabalhos importantes da áreas que usaram esses operadores</p>
+<p>Falar um pouco deles</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-<section id="mediana" class="slide level2">
-<h2>Mediana</h2>
+<section id="séries-temporais" class="slide level2">
+<h2>Séries Temporais</h2>
+<p><span class="citation" data-cites="box2015">Box et al. (<a href="#/referências" role="doc-biblioref" onclick="">2015</a>)</span> definem séries temporais são definidas como uma sequência de observações feitas sequencialmente no tempo.</p>
+<ul>
+<li>Discretas ou contínuas;</li>
+<li>Univariádas ou multivariádas.</li>
+</ul>
+<p>Este trabalho limita-se ao uso de séries discretas e univariádas.</p>
+<aside class="notes">
+<p>discretas ou contínuas em relação ao tempo vetor ou matriz da séries</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-<section id="média-ponderada" class="slide level2">
-<h2>Média Ponderada</h2>
+<section id="combinações" class="slide level2">
+<h2>Combinações</h2>
+<ul>
+<li><p>A literatura vem acumulando dados que mostram a eficiência no emprego de combinações (<span class="citation" data-cites="clemen1989">Clemen (<a href="#/referências" role="doc-biblioref" onclick="">1989</a>)</span>, <span class="citation" data-cites="wang2023review">Wang et al. (<a href="#/referências" role="doc-biblioref" onclick="">2023</a>)</span>)</p></li>
+<li><p>Uso de combinações corrige os problemas de estimação com modelos individuais, <span class="citation" data-cites="makridakis_livro_1998">Makridakis, Wheelwright, e Hyndman (<a href="#/referências" role="doc-biblioref" onclick="">1998</a>)</span>;</p></li>
+<li><p>Com elas conseguimos nos aproximar da função real e desconhecida que representa os dados, <span class="citation" data-cites="zhou2025">Zhou (<a href="#/referências" role="doc-biblioref" onclick="">2025</a>)</span>.</p></li>
+</ul>
 </section>
-<section id="stacking" class="slide level2">
-<h2><em>Stacking</em></h2>
+<section id="tipos-básicos-de-operadores" class="slide level2">
+<h2>Tipos Básicos de Operadores</h2>
+<ul>
+<li>De acordo com <span class="citation" data-cites="kuncheva2014">Kuncheva (<a href="#/referências" role="doc-biblioref" onclick="">2014</a>)</span> há três tipos básicos de operadores de combinação:</li>
+</ul>
+<div class="columns">
+<div class="column">
+<h3 id="tipos">Tipos</h3>
+<ol type="1">
+<li>Treináveis;</li>
+<li>Não treináveis</li>
+<li>Meta-modelos</li>
+</ol>
+</div><div class="column">
+<h3 id="usados-no-trabalho">Usados no Trabalho</h3>
+<ul>
+<li>Média Simples</li>
+<li>Mediana</li>
+<li>Média Ponderada</li>
+<li><em>Stacking</em></li>
+</ul>
+</div></div>
+<aside class="notes">
+<p>Falar dos modelos como pertencente a uma das classes Falar que o stackin usa SVR como meta-modelo com kernel RBF, modleo não linear</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section>
 <section id="metodologia" class="title-slide slide level1 center">
@@ -253,17 +333,1831 @@ Prof.&nbsp;Dr.&nbsp;João Fausto Lorenzato de Oliveira
 </section>
 <section id="metodo-proposto" class="slide level2">
 <h2>Metodo Proposto</h2>
+<ul>
+<li><p>É uma combinação linear e estática (seus pesos não variam no tempo) por média ponderada para previsão de séries temporais para um passo à frente.</p></li>
+<li><p>Os pesos são estimados por meio da técnica de <em>feature importance</em> (FI) do modelo Extremely Randomized Trees (ET).</p></li>
+</ul>
 </section>
-<section id="feature-importance" class="slide level2">
-<h2><em>Feature Importance</em></h2>
+<section id="feature-importance-1" class="slide level2">
+<h2><em>Feature Importance</em> 1</h2>
+<div style="font-size: 80%;">
+<ul>
+<li><p>FI é um técnica de interpretação de Árvores de Decisão e seus <em>ensembles</em>.</p></li>
+<li><p>Segundo <span class="citation" data-cites="pml1Book">Murphy (<a href="#/referências" role="doc-biblioref" onclick="">2022</a>)</span>, a medida de FI <span class="math inline">\(R_k(T)\)</span> de uma variável <span class="math inline">\(k\)</span> em uma Árvore de Decisão <span class="math inline">\(T\)</span> é expressa pela fórmula:</p></li>
+</ul>
+<p><span class="math display">\[\begin{align}
+    \label{eq:R}
+    R_k(T) = \sum_{j=1}^{J-1} G_j \mathbb{I}(v_j = k)
+\end{align}\]</span></p>
+<ul>
+<li><p>Esta formula, grosso modo, verifica se no nó <span class="math inline">\(j\)</span> existe a <em>feature</em> <span class="math inline">\(k\)</span>, se sim, a função indicadora <span class="math inline">\(\mathbb{I}\)</span> retorna 1; senão, 0. Para multiplicar pelo ganho de informação <span class="math inline">\(G_j\)</span> do nó.</p></li>
+<li><p>Os valores de ganho de informação de cada nó serão normalizado entre 0 e 1.</p></li>
+</ul>
+</div>
 </section>
-<section id="extremely-randomized-trees" class="slide level2">
-<h2>Extremely Randomized Trees</h2>
+<section id="feature-importance-2" class="slide level2">
+<h2><em>Feature Importance</em> 2</h2>
+<ul>
+<li>Para os <em>ensemble</em> calcula-se a média valores <span class="math inline">\(R_k\)</span> de cada feature <span class="math inline">\(k\)</span> para cada árvore <span class="math inline">\(T_m\)</span> da combinação <span class="math inline">\(M\)</span>.</li>
+</ul>
+<p><span class="math display">\[\begin{align}
+        R_k = \frac{1}{M} \sum_{m=1}^{M} R_k(T_m)
+\end{align}\]</span></p>
+</section>
+<section id="extremely-randomized-trees-et" class="slide level2">
+<h2>Extremely Randomized Trees (ET)</h2>
+<div class="columns" style="font-size: 90%;">
+<div class="column" style="width:50%;">
+<h3 id="características">Características</h3>
+<ul>
+<li>É um ensemble de Árvore de Decisão sememlhante ao Random Forest;</li>
+<li>ET usa um amostra de colunas e com todas as linha;</li>
+<li>E, ao invés de verificar o valor ótimo que reduz a impureza de Gini/Entropia/MSE, escolhe aleatoriamente um valor limiar que represente a coluna.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="vantagens">Vantagens</h3>
+<ul>
+<li>Mais rápida que os outros ensembles baseados em Árvore de Decisão;</li>
+<li>Lida bem com ruídos nos dados;</li>
+<li>Tem a variância mais baixa que o Random Forest.</li>
+</ul>
+</div></div>
+</section>
+<section id="treino-e-teste-1" class="slide level2">
+<h2>Treino e Teste 1</h2>
+<ul>
+<li><p>Para avaliar os operadores foram usados 5 modelos estatísticos: ARIMA, ETS, CES, Theta e TBATS, e 4 de aprendizado de máquina: MLP, SVR, KNN e Random Forest;</p></li>
+<li><p>Os dados são 30 séries de sasonalidade mensal da Competição M3;</p></li>
+<li><p>As séries são divididas em conjunto de treino e teste com as últimas 18 observações de cada série compondo o conjunto teste;</p></li>
+<li><p>As métricas de avaliação usadas são RMSE e SMAPE.</p></li>
+</ul>
+<aside class="notes">
+<p>Esses modelos foram escolhidos para analisar combinações heterogêneas, restringindo o escopo do trablho e seguindo a recomendação de diversidade;</p>
+<p>As séries da M3 são muito usadas como benchmark e são mensais para restringir o escopo;</p>
+<p>O número de observações do conjunto teste é seguindo a metodologia de Makridakis;</p>
+<p>Foram escolhidas duas métricas para não eviesar a análise com somente um e SMAPE foi escolhida por causa dos problemas de MAPE.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="treino-e-teste-2" class="slide level2">
+<h2>Treino e Teste 2</h2>
+
+<img data-src="imagens/diagram.png" class="r-stretch quarto-figure-center"><p class="caption">Diagrama de Treino e Teste</p></section>
+<section id="treino-e-teste-3" class="slide level2">
+<h2>Treino e Teste 3</h2>
+
+<img data-src="imagens/algo.png" class="r-stretch quarto-figure-center"><p class="caption">algortimo para gerar Combinações</p><ul>
+<li>Para cada uma das 30 séries, usando os 4 operadores, de 2 a 9 modelos, há 61.320 combinações.</li>
+</ul>
+<p><span class="math display">\[\begin{align}
+  C_j^{9} = \frac{9!}{j!(9-j)!}
+\end{align}\]</span></p>
+</section>
+<section id="ferramentas-de-análise" class="slide level2">
+<h2>Ferramentas de Análise</h2>
+<ol type="1">
+<li><p>Uso de agrupamento médio dos resultados RMSE e SMAPE em relação ao número de métodos na combinação;</p></li>
+<li><p>Análise de Gráfico de Resultados;</p></li>
+<li><p>Box Plots;</p></li>
+<li><p>Análise do Gráfico de Desvio Padrão;</p></li>
+<li><p>Diagrama de Distância Crítica.</p></li>
+</ol>
 </section></section>
-<section id="analise-de-resultados" class="title-slide slide level1 center">
-<h1>Analise de Resultados</h1>
+<section>
+<section id="resultados-individuais" class="title-slide slide level1 center">
+<h1>Resultados Individuais</h1>
 
 </section>
+<section id="n1402" class="slide level2">
+<h2>N1402</h2>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Série</a></li><li><a href="#tabset-1-2">Tab. RMSE</a></li><li><a href="#tabset-1-3">Gra. RMSE</a></li><li><a href="#tabset-1-4">Tab. SMAPE</a></li><li><a href="#tabset-1-5">Gra. SMAPE</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="imagens/n1402.png"></p>
+<figcaption>Série N1402 dividida em conjuntos de treino e de teste.</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-1-2">
+<div style="font-size: 80%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Nº Modelos</th>
+<th>Média</th>
+<th>Mediana</th>
+<th>Média Ponderada</th>
+<th>SVR-stacking*</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>1770,740</td>
+<td>1770,740</td>
+<td>1758,380</td>
+<td>1791,461</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>1685,278</td>
+<td>1790,400</td>
+<td>1645,521</td>
+<td>1745,400</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>1640,800</td>
+<td>1739,003</td>
+<td>1601,240</td>
+<td>1717,897</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>1614,236</td>
+<td>1780,500</td>
+<td>1582,560</td>
+<td>1708,140</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>1596,761</td>
+<td>1743,203</td>
+<td>1572,542</td>
+<td>1705,821</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>1584,455</td>
+<td>1782,866</td>
+<td>1567,675</td>
+<td>1705,115</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>1575,345</td>
+<td>1747,335</td>
+<td>1566,110</td>
+<td>1705,056</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>1568,340</td>
+<td>1849,635</td>
+<td><strong>1563,561</strong></td>
+<td>1705,056</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="tabset-1-3">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="imagens/rmse-n1402.png"></p>
+<figcaption>RMSE médio</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-1-4">
+<div style="font-size: 80%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Nº Modelos</th>
+<th>Média</th>
+<th>Mediana</th>
+<th>Média Ponderada</th>
+<th>SVR-stacking*</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>70,361</td>
+<td>70,361</td>
+<td>69,880</td>
+<td>70,248</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>66,707</td>
+<td>69,134</td>
+<td>65,004</td>
+<td>69,869</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>65,440</td>
+<td>69,031</td>
+<td>63,616</td>
+<td>69,465</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>65,097</td>
+<td>69,554</td>
+<td>63,223</td>
+<td>69,267</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>64,965</td>
+<td>69,733</td>
+<td>62,992</td>
+<td>69,211</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>64,918</td>
+<td>70,447</td>
+<td><strong>62,914</strong></td>
+<td>69,194</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>64,902</td>
+<td>70,631</td>
+<td>62,980</td>
+<td>69,192</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>64,989</td>
+<td>72,686</td>
+<td>63,084</td>
+<td>69,192</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="tabset-1-5">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="imagens/smape-n1402.png"></p>
+<figcaption>SMAPE médio</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="n1411" class="slide level2">
+<h2>N1411</h2>
+<div class="panel-tabset">
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Série</a></li><li><a href="#tabset-2-2">Tab. RMSE</a></li><li><a href="#tabset-2-3">Gra. RMSE</a></li><li><a href="#tabset-2-4">Tab. SMAPE</a></li><li><a href="#tabset-2-5">Gra. SMAPE</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="imagens/n1411.png"></p>
+<figcaption>Série N1411 dividida em conjuntos de treino e de teste.</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-2-2">
+<div style="font-size: 80%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Nº Modelos</th>
+<th>Média</th>
+<th>Mediana</th>
+<th>Média Ponderada</th>
+<th>SVR-<em>stacking</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>800,525</td>
+<td>800,525</td>
+<td>801,864</td>
+<td>851,850</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>782,224</td>
+<td>841,570</td>
+<td>784,939</td>
+<td>849,847</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>773,135</td>
+<td>819,003</td>
+<td>777,042</td>
+<td>849,366</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>767,718</td>
+<td>842,212</td>
+<td>769,271</td>
+<td>849,298</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>764,128</td>
+<td>828,168</td>
+<td>764,043</td>
+<td>849,256</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>761,578</td>
+<td>842,194</td>
+<td>756,919</td>
+<td>849,256</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>759,675</td>
+<td>833,516</td>
+<td><strong>743,206</strong></td>
+<td>849,256</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>758,201</td>
+<td>853,638</td>
+<td>748,593</td>
+<td>849,256</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="tabset-2-3">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="imagens/rmse-n1411.png"></p>
+<figcaption>RMSE médio</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-2-4">
+<div style="font-size: 80%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Nº Modelos</th>
+<th>Média</th>
+<th>Mediana</th>
+<th>Média Ponderada</th>
+<th>SVR-<em>stacking</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>15,625</td>
+<td>15,625</td>
+<td>15,518</td>
+<td>16,628</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>15,257</td>
+<td>16,383</td>
+<td>15,147</td>
+<td>16,636</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>15,061</td>
+<td>15,947</td>
+<td>14,970</td>
+<td>16,630</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>14,931</td>
+<td>16,482</td>
+<td>14,806</td>
+<td>16,630</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>14,857</td>
+<td>16,214</td>
+<td>14,721</td>
+<td>16,629</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>14,813</td>
+<td>16,592</td>
+<td>14,597</td>
+<td>16,629</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>14,807</td>
+<td>16,452</td>
+<td><strong>14,350</strong></td>
+<td>16,629</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>14,771</td>
+<td>16,666</td>
+<td>14,525</td>
+<td>16,629</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="tabset-2-5">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="imagens/smape-n1411.png"></p>
+<figcaption>SMAPE médio</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="n1501" class="slide level2">
+<h2>N1501</h2>
+<div class="panel-tabset">
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Série</a></li><li><a href="#tabset-3-2">Tab. RMSE</a></li><li><a href="#tabset-3-3">Gra. RMSE</a></li><li><a href="#tabset-3-4">Tab. SMAPE</a></li><li><a href="#tabset-3-5">Gra. SMAPE</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="imagens/n1501.png"></p>
+<figcaption>Série N1411 dividida em conjuntos de treino e de teste.</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-3-2">
+<div style="font-size: 80%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Nº Modelos</th>
+<th>Média</th>
+<th>Mediana</th>
+<th>Média Ponderada</th>
+<th>SVR-<em>stacking</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>600,972</td>
+<td>600,972</td>
+<td>605,266</td>
+<td>1415,820</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>594,697</td>
+<td>606,104</td>
+<td>600,605</td>
+<td>1456,629</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>591,537</td>
+<td>598,172</td>
+<td>598,475</td>
+<td>1458,460</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>589,631</td>
+<td>602,214</td>
+<td>597,284</td>
+<td>1458,790</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>588,356</td>
+<td>596,830</td>
+<td>596,909</td>
+<td>1458,790</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>587,443</td>
+<td>601,875</td>
+<td>596,241</td>
+<td>1458,790</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>586,756</td>
+<td>596,758</td>
+<td>595,761</td>
+<td>1458,790</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td><strong>586,221</strong></td>
+<td>597,759</td>
+<td>594,568</td>
+<td>1458,790</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="tabset-3-3">
+<div id="fig-RMSE-n1501" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-RMSE-n1501-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-RMSE-n1501" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rmse-n1501-com-stack" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-rmse-n1501-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/rmse-n1501-1.png" data-ref-parent="fig-RMSE-n1501">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rmse-n1501-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) RMSE com SVR-stacking
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-RMSE-n1501" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rmse-n1501-sem-stack" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-rmse-n1501-sem-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/rmse-n1501-2.png" data-ref-parent="fig-RMSE-n1501">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rmse-n1501-sem-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) RMSE sem SVR-stacking
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-RMSE-n1501-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-3-4">
+<div style="font-size: 80%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Nº Modelos</th>
+<th>Média</th>
+<th>Mediana</th>
+<th>Média Ponderada</th>
+<th>SVR-<em>stacking</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>9,218</td>
+<td>9,218</td>
+<td>9,294</td>
+<td>21,901</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>9,110</td>
+<td>9,322</td>
+<td>9,211</td>
+<td>22,558</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>9,065</td>
+<td>9,212</td>
+<td>9,182</td>
+<td>22,590</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>9,048</td>
+<td>9,294</td>
+<td>9,166</td>
+<td>22,595</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>9,037</td>
+<td>9,214</td>
+<td>9,161</td>
+<td>22,595</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>9,030</td>
+<td>9,287</td>
+<td>9,145</td>
+<td>22,595</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>9,021</td>
+<td>9,201</td>
+<td>9,145</td>
+<td>22,595</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td><strong>9,018</strong></td>
+<td>9,272</td>
+<td>9,116</td>
+<td>22,595</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="tabset-3-5">
+<div id="fig-SMAPE-n1501" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-SMAPE-n1501-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-SMAPE-n1501" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rmse-n1501-com-stack" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-rmse-n1501-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/smape-n1501-1.png" data-ref-parent="fig-SMAPE-n1501">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rmse-n1501-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) SMAPE com SVR-stacking
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-SMAPE-n1501" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rmse-n1501-sem-stack" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-rmse-n1501-sem-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/smape-n1501-2.png" data-ref-parent="fig-SMAPE-n1501">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rmse-n1501-sem-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) SMAPE sem SVR-stacking
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-SMAPE-n1501-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="n2401" class="slide level2">
+<h2>N2401</h2>
+<div class="panel-tabset">
+<ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">Série</a></li><li><a href="#tabset-4-2">Tab. RMSE</a></li><li><a href="#tabset-4-3">Gra. RMSE</a></li><li><a href="#tabset-4-4">Tab. SMAPE</a></li><li><a href="#tabset-4-5">Gra. SMAPE</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="imagens/n2401.png"></p>
+<figcaption>Série N2401 dividida em conjuntos de treino e de teste.</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-4-2">
+<div style="font-size: 80%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Nº Modelos</th>
+<th>Média</th>
+<th>Mediana</th>
+<th>Média Ponderada</th>
+<th>SVR-<em>stacking</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>58,217</td>
+<td>58,217</td>
+<td>54,118</td>
+<td>587,052</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>57,256</td>
+<td>63,578</td>
+<td>51,954</td>
+<td>606,876</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>56,847</td>
+<td>62,025</td>
+<td>50,948</td>
+<td>611,767</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>56,629</td>
+<td>66,172</td>
+<td>49,706</td>
+<td>613,702</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>56,495</td>
+<td>64,995</td>
+<td>49,470</td>
+<td>615,034</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>56,404</td>
+<td>70,032</td>
+<td>49,628</td>
+<td>616,250</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>56,339</td>
+<td>68,962</td>
+<td>47,773</td>
+<td>617,420</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>56,290</td>
+<td>81,506</td>
+<td><strong>45,278</strong></td>
+<td>618,500</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="tabset-4-3">
+<div id="fig-RMSE-n2401" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-RMSE-n2401-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-RMSE-n2401" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rmse-n2401-com-stack" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-rmse-n2401-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/rmse-n2401-1.png" data-ref-parent="fig-RMSE-n2401">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rmse-n2401-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) RMSE com SVR-stacking
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-RMSE-n2401" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rmse-n2401-sem-stack" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-rmse-n2401-sem-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/rmse-n2401-2.png" data-ref-parent="fig-RMSE-n2401">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rmse-n2401-sem-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) RMSE sem SVR-stacking
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-RMSE-n2401-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-4-4">
+<div style="font-size: 80%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Nº Modelos</th>
+<th>Média</th>
+<th>Mediana</th>
+<th>Média Ponderada</th>
+<th>SVR-<em>stacking</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>1,093</td>
+<td>1,093</td>
+<td>1,005</td>
+<td>13,441</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>1,077</td>
+<td>1,181</td>
+<td>0,972</td>
+<td>13,964</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>1,070</td>
+<td>1,162</td>
+<td>0,956</td>
+<td>14,097</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>1,067</td>
+<td>1,230</td>
+<td>0,935</td>
+<td>14,148</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>1,065</td>
+<td>1,219</td>
+<td>0,932</td>
+<td>14,182</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>1,063</td>
+<td>1,303</td>
+<td>0,936</td>
+<td>14,213</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>1,063</td>
+<td>1,296</td>
+<td>0,902</td>
+<td>14,242</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>1,063</td>
+<td>1,530</td>
+<td><strong>0,860</strong></td>
+<td>14,269</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="tabset-4-5">
+<div id="fig-SMAPE-n2401" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-SMAPE-n2401-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-SMAPE-n2401" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rmse-n2401-com-stack" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-rmse-n2401-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/smape-n2401-1.png" data-ref-parent="fig-SMAPE-n2401">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rmse-n2401-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) SMAPE com SVR-stacking
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-SMAPE-n2401" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rmse-n2401-sem-stack" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-rmse-n2401-sem-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/smape-n2401-2.png" data-ref-parent="fig-SMAPE-n2401">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rmse-n2401-sem-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) SMAPE sem SVR-stacking
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-SMAPE-n2401-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="n2402" class="slide level2">
+<h2>N2402</h2>
+<div class="panel-tabset">
+<ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1">Série</a></li><li><a href="#tabset-5-2">Tab. RMSE</a></li><li><a href="#tabset-5-3">Gra. RMSE</a></li><li><a href="#tabset-5-4">Tab. SMAPE</a></li><li><a href="#tabset-5-5">Gra. SMAPE</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="imagens/n2402.png"></p>
+<figcaption>Série N2402 dividida em conjuntos de treino e de teste.</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-5-2">
+<div style="font-size: 80%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Nº Modelos</th>
+<th>Média</th>
+<th>Mediana</th>
+<th>Média Ponderada</th>
+<th>SVR-stacking*</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>73,285</td>
+<td>73,285</td>
+<td>75,093</td>
+<td>1085,426</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>69,580</td>
+<td>72,588</td>
+<td>69,935</td>
+<td>1096,814</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>67,648</td>
+<td>69,131</td>
+<td>66,785</td>
+<td>1101,889</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>66,475</td>
+<td>70,630</td>
+<td>65,053</td>
+<td>1106,649</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>65,693</td>
+<td>68,726</td>
+<td>63,633</td>
+<td>1111,671</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>65,135</td>
+<td>71,785</td>
+<td>63,073</td>
+<td>1116,819</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>64,718</td>
+<td>70,210</td>
+<td>62,094</td>
+<td>1124,255</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>64,396</td>
+<td>77,586</td>
+<td><strong>61,848</strong></td>
+<td>1128,511</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="tabset-5-3">
+<div id="fig-RMSE-n2402" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-RMSE-n2402-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-RMSE-n2402" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rmse-n2402-com-stack" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-rmse-n2402-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/rmse-n2402-1.png" data-ref-parent="fig-RMSE-n2402">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rmse-n2402-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) RMSE com SVR-stacking
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-RMSE-n2402" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rmse-n2402-sem-stack" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-rmse-n2402-sem-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/rmse-n2402-2.png" data-ref-parent="fig-RMSE-n2402">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rmse-n2402-sem-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) RMSE sem SVR-stacking
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-RMSE-n2402-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-5-4">
+<div style="font-size: 80%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Nº Modelos</th>
+<th>Média</th>
+<th>Mediana</th>
+<th>Média Ponderada</th>
+<th>SVR-<em>stacking</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>0,876</td>
+<td>0,876</td>
+<td>0,888</td>
+<td>17,568</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>0,848</td>
+<td>0,856</td>
+<td>0,844</td>
+<td>17,785</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>0,830</td>
+<td>0,819</td>
+<td>0,815</td>
+<td>17,875</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>0,817</td>
+<td>0,835</td>
+<td>0,795</td>
+<td>17,960</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>0,807</td>
+<td>0,813</td>
+<td>0,777</td>
+<td>18,049</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>0,796</td>
+<td>0,854</td>
+<td>0,769</td>
+<td>18,140</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>0,789</td>
+<td>0,833</td>
+<td><strong>0,753</strong></td>
+<td>18,273</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>0,778</td>
+<td>0,922</td>
+<td>0,756</td>
+<td>18,348</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="tabset-5-5">
+<div id="fig-SMAPE-n2402" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-SMAPE-n2402-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-SMAPE-n2402" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rmse-n2402-com-stack" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-rmse-n2402-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/smape-n2402-1.png" data-ref-parent="fig-SMAPE-n2402">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rmse-n2402-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) SMAPE com SVR-stacking
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-SMAPE-n2402" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rmse-n2402-sem-stack" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-rmse-n2402-sem-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/smape-n2402-2.png" data-ref-parent="fig-SMAPE-n2402">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rmse-n2402-sem-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) SMAPE sem SVR-stacking
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-SMAPE-n2402-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="resultado-geral" class="title-slide slide level1 center">
+<h1>Resultado Geral</h1>
+
+</section>
+<section id="análise-geral-métrica-rmse" class="slide level2">
+<h2>Análise Geral Métrica RMSE</h2>
+<div class="panel-tabset">
+<ul id="tabset-6" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-6-1">Tabela RSME</a></li><li><a href="#tabset-6-2">Gráfico RMSE</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1">
+<div style="font-size: 80%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Nº Modelos</th>
+<th>Média</th>
+<th>Mediana</th>
+<th>Média Ponderada</th>
+<th>SVR-<em>stacking</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>413,704</td>
+<td>413,704</td>
+<td>406,92</td>
+<td>812,363</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>405,592</td>
+<td>429,793</td>
+<td>393,485</td>
+<td>852,605</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>401,542</td>
+<td>420,327</td>
+<td>385,919</td>
+<td>868,687</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>399,143</td>
+<td>433,941</td>
+<td>380,714</td>
+<td>874,316</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>397,564</td>
+<td>427,107</td>
+<td>376,198</td>
+<td>877,221</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>396,448</td>
+<td>442,518</td>
+<td>372,836</td>
+<td>878,519</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>395,619</td>
+<td>436,335</td>
+<td>370,042</td>
+<td>879,328</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>394,979</td>
+<td>472,767</td>
+<td><strong>367,276</strong></td>
+<td>879,686</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="tabset-6-2">
+<div id="fig-RMSE" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-RMSE-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-RMSE" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rmse-com-stack" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-rmse-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/mean-rmse-1.png" data-ref-parent="fig-RMSE">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rmse-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) RMSE com SVR-stacking
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-RMSE" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rmse-sem-stack" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-rmse-sem-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/mean-rmse-2.png" data-ref-parent="fig-RMSE">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rmse-sem-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) RMSE sem SVR-stacking
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-RMSE-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="análise-geral-métrica-smape" class="slide level2">
+<h2>Análise Geral Métrica SMAPE</h2>
+<div class="panel-tabset">
+<ul id="tabset-7" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-7-1">Tabela SMAPE</a></li><li><a href="#tabset-7-2">Gráfico SMAPE</a></li></ul>
+<div class="tab-content">
+<div id="tabset-7-1">
+<div style="font-size: 80%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Nº Modelos</th>
+<th>Média</th>
+<th>Mediana</th>
+<th>Média Ponderada</th>
+<th>SVR-<em>stacking</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>7,998</td>
+<td>7,998</td>
+<td>7,863</td>
+<td>15,177</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>7,792</td>
+<td>8,217</td>
+<td>7,535</td>
+<td>16,007</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>7,712</td>
+<td>8,087</td>
+<td>7,380</td>
+<td>16,358</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>7,678</td>
+<td>8,317</td>
+<td>7,284</td>
+<td>16,494</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>7,661</td>
+<td>8,230</td>
+<td>7,202</td>
+<td>16,568</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>7,649</td>
+<td>8,497</td>
+<td>7,142</td>
+<td>16,603</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>7,644</td>
+<td>8,418</td>
+<td>7,090</td>
+<td>16,625</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>7,640</td>
+<td>9,023</td>
+<td><strong>7,051</strong></td>
+<td>16,638</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="tabset-7-2">
+<div id="fig-SMAPE" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-SMAPE-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-SMAPE" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-smape-com-stack" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-smape-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/mean-smape-1.png" data-ref-parent="fig-SMAPE">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-smape-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) SMAPE com SVR-stacking
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-SMAPE" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-smape-sem-stack" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-smape-sem-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/mean-smape-2.png" data-ref-parent="fig-SMAPE">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-smape-sem-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) SMAPE sem SVR-stacking
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-SMAPE-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="box-plots-e-análise-de-dispersão" class="title-slide slide level1 center">
+<h1>Box Plots e Análise de Dispersão</h1>
+
+</section>
+<section id="box-plots" class="slide level2">
+<h2>Box Plots</h2>
+<div class="panel-tabset">
+<ul id="tabset-8" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-8-1">Box Plots RMSE</a></li><li><a href="#tabset-8-2">Box Plots SMAPE</a></li></ul>
+<div class="tab-content">
+<div id="tabset-8-1">
+<div id="fig-box-plot-RMSE" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-box-plot-RMSE-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-box-plot-RMSE" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rmse-box-plot-com-stack" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-rmse-box-plot-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/boxplot_rmse-1.png" data-ref-parent="fig-box-plot-RMSE">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rmse-box-plot-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) RMSE com SVR-stacking
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-box-plot-RMSE" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-rmse-box-plot-sem-stack" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-rmse-box-plot-sem-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/boxplot_rmse-2.png" data-ref-parent="fig-box-plot-RMSE">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rmse-box-plot-sem-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) RMSE sem SVR-stacking
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-box-plot-RMSE-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;9
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-8-2">
+<div id="fig-box-plot-SMAPE" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-box-plot-SMAPE-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-box-plot-SMAPE" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-smape-box-plot-com-stack" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-smape-box-plot-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/boxplot_smape-1.png" data-ref-parent="fig-box-plot-SMAPE">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-smape-box-plot-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) SMAPE com SVR-stacking
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-box-plot-SMAPE" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-smape-box-plot-sem-stack" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-smape-box-plot-sem-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/boxplot_smape-2.png" data-ref-parent="fig-box-plot-SMAPE">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-smape-box-plot-sem-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) SMAPE sem SVR-stacking
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-box-plot-SMAPE-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;10
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>As distribuições dos modelos não são iguais, o que é indicativo de performance diferentes, com uns melhores que os outros.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="análise-de-dispersão-rmse" class="slide level2">
+<h2>Análise de Dispersão RMSE</h2>
+<div class="panel-tabset">
+<ul id="tabset-9" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-9-1">Tab. RMSE</a></li><li><a href="#tabset-9-2">Gráf. RMSE</a></li><li><a href="#tabset-9-3">Tab. SMAPE</a></li><li><a href="#tabset-9-4">Gráf. SMAPE</a></li></ul>
+<div class="tab-content">
+<div id="tabset-9-1">
+<div style="font-size: 80%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Nº Modelos</th>
+<th>Média</th>
+<th>Mediana</th>
+<th>Média Ponderada</th>
+<th>SVR-<em>stacking</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>376,211</td>
+<td>376,211</td>
+<td>378,640</td>
+<td>416,214</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>359,513</td>
+<td>389,573</td>
+<td>355,494</td>
+<td>395,833</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>350,819</td>
+<td>372,831</td>
+<td>345,208</td>
+<td>384,150</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>345,454</td>
+<td>383,874</td>
+<td>339,261</td>
+<td>379,478</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>341,820</td>
+<td>371,095</td>
+<td>335,090</td>
+<td>378,087</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>339,256</td>
+<td>380,699</td>
+<td>332,040</td>
+<td>377,647</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>337,709</td>
+<td>369,024</td>
+<td><strong>330,675</strong></td>
+<td>378,005</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>341,235</td>
+<td>392,295</td>
+<td>333,140</td>
+<td>383,749</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="tabset-9-2">
+<div id="fig-rmse-std-com-stack" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-rmse-std-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/std-rmse.png">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rmse-std-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;11: Desvio Padrão RMSE
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-9-3">
+<div style="font-size: 80%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Nº Modelos</th>
+<th>Média</th>
+<th>Mediana</th>
+<th>Média Ponderada</th>
+<th>SVR-<em>stacking</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>12,789</td>
+<td>12,789</td>
+<td>13,022</td>
+<td>12,529</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>12,161</td>
+<td>12,669</td>
+<td>11,872</td>
+<td>12,164</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>11,937</td>
+<td>12,563</td>
+<td>11,596</td>
+<td>11,956</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>11,859</td>
+<td>12,677</td>
+<td>11,490</td>
+<td>11,868</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>11,820</td>
+<td>12,645</td>
+<td>11,424</td>
+<td>11,834</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>11,801</td>
+<td>12,771</td>
+<td><strong>11,390</strong></td>
+<td>11,820</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>11,803</td>
+<td>12,768</td>
+<td>11,396</td>
+<td>11,828</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>11,987</td>
+<td>13,257</td>
+<td>11,581</td>
+<td>12,005</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="tabset-9-4">
+<div id="fig-smape-std-com-stack" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-smape-std-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/std-smape.png">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-smape-std-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;12: Desvio Padrão SMAPE
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="distância-crítica" class="slide level2">
+<h2>Distância Crítica</h2>
+<div id="fig-DC" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-DC-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-DC" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="fig-smape-dc" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-smape-dc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/cd-rmse.png" data-ref-parent="fig-DC">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-smape-dc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) RMSE
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-DC" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="fig-rmse-dc" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-rmse-dc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="imagens/cd-smape.png" data-ref-parent="fig-DC">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rmse-dc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) SMAPE
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-DC-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;13
+</figcaption>
+</figure>
+</div>
+<aside class="notes">
+<p>O teste foi feito com 5% de nível significância mostrando claramente a diferença nos operadores.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="conclusão-1" class="slide level2">
+<h2>Conclusão 1</h2>
+<ol type="1">
+<li><p>Combinações superam modelos individuais;</p></li>
+<li><p>Média ponderada com FI se destacou</p></li>
+<li><p>A mediana não apresentou resultados satisfatórios;</p></li>
+<li><p>O stacking obteve os piores resultados</p></li>
+<li><p>Resultados mostram, no contexto do trabalho, que quanto mais modelos combinados, maior é a acurácia e a robutez para média simples e média ponderada;</p></li>
+</ol>
+<aside class="notes">
+<ol type="1">
+<li><p>fato corroborante com a literatura;</p></li>
+<li><p>Dada as características da técnica de FI e do Extra Trees, ele consegue poderar os modelos na combinação.</p></li>
+<li><p>Uma hipótese para isso é que os modelos da literatura foram homogêneos.O que pode indicar que a mediana funciona melhor para combinações homogêneas ou com baixa diversidade.</p></li>
+<li><p>Uma possível explicação é que como SVR é um modelos não linear e determinítico, pode ter modelado o caos das séries. Kernel linear funcionou em Ribeiro e Coelho</p></li>
+<li><p>Como os modelos são diferentes, é possível que a heterogênedade tenha contribuido</p></li>
+</ol>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="conclusão-2" class="slide level2">
+<h2>Conclusão 2</h2>
+<h3 id="para-trabalhos-futuros">Para trabalhos futuros</h3>
+<ul>
+<li>Testar o combinador em séries com sazonalidades diferentes;</li>
+<li>Verificar se em previsão de muitos passos a performance continua satisfatória;</li>
+<li>Explorar outros <em>ensembles</em> de Árvores como estimador de pesos;</li>
+<li>Verificar a seleção de modelos por correlação dos resíduos;</li>
+<li>Aplicar os operador em sistemas híbridos.</li>
+</ul>
+</section>
+<section id="referências" class="slide level2 smaller scrollable">
+<h2>Referências</h2>
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-box2015" class="csl-entry" role="listitem">
+Box, George EP, Gwilym M Jenkins, Gregory C Reinsel, e Greta M Ljung. 2015. <em>Time series analysis: forecasting and control</em>. John Wiley &amp; Sons.
+</div>
+<div id="ref-clemen1989" class="csl-entry" role="listitem">
+Clemen, Robert T. 1989. <span>«Combining forecasts: A review and annotated bibliography»</span>. <em>International journal of forecasting</em> 5 (4): 559–83.
+</div>
+<div id="ref-fiorucci2020groec" class="csl-entry" role="listitem">
+Fiorucci, Jose Augusto, e Francisco Louzada. 2020. <span>«Groec: combination method via generalized rolling origin evaluation»</span>. <em>International Journal of Forecasting</em> 36 (1): 105–9.
+</div>
+<div id="ref-geurts2006extratrees" class="csl-entry" role="listitem">
+Geurts, Pierre, Damien Ernst, e Louis Wehenkel. 2006. <span>«Extremely randomized trees»</span>. <em>Machine learning</em> 63: 3–42.
+</div>
+<div id="ref-ghazwani2023computational" class="csl-entry" role="listitem">
+Ghazwani, Mohammed, e M Yasmin Begum. 2023. <span>«Computational intelligence modeling of hyoscine drug solubility and solvent density in supercritical processing: Gradient boosting, extra trees, and random forest models»</span>. <em>Scientific Reports</em> 13 (1): 10046.
+</div>
+<div id="ref-kolassa2011" class="csl-entry" role="listitem">
+Kolassa, Stephan. 2011. <span>«Combining exponential smoothing forecasts using Akaike weights»</span>. <em>International Journal of Forecasting</em> 27 (2): 238–51.
+</div>
+<div id="ref-kuncheva2014" class="csl-entry" role="listitem">
+Kuncheva, Ludmila I. 2014. <em>Combining pattern classifiers: methods and algorithms</em>. John Wiley &amp; Sons.
+</div>
+<div id="ref-makridakis_livro_1998" class="csl-entry" role="listitem">
+Makridakis, Spyros, Steven Wheelwright, e Rob J. Hyndman. 1998. <em>Forecasting: methods and applications</em>. John Wiley &amp; Sons.
+</div>
+<div id="ref-fforma" class="csl-entry" role="listitem">
+Montero-Manso, Pablo, George Athanasopoulos, Rob J Hyndman, e Thiyanga S Talagala. 2020. <span>«FFORMA: Feature-based forecast model averaging»</span>. <em>International Journal of Forecasting</em> 36 (1): 86–92. https://doi.org/<a href="https://doi.org/10.1016/j.ijforecast.2019.02.011">https://doi.org/10.1016/j.ijforecast.2019.02.011</a>.
+</div>
+<div id="ref-pml1Book" class="csl-entry" role="listitem">
+Murphy, Kevin P. 2022. <em>Probabilistic Machine Learning: An introduction</em>. MIT Press. <a href="https://probml.ai">probml.ai</a>.
+</div>
+<div id="ref-petropoulos2018bagging" class="csl-entry" role="listitem">
+Petropoulos, Fotios, Rob J Hyndman, e Christoph Bergmeir. 2018. <span>«Exploring the sources of uncertainty: Why does bagging for time series forecasting work?»</span> <em>European Journal of Operational Research</em> 268 (2): 545–54.
+</div>
+<div id="ref-wang2023review" class="csl-entry" role="listitem">
+Wang, Xiaoqian, Rob J Hyndman, Feng Li, e Yanfei Kang. 2023. <span>«Forecast combinations: An over 50-year review»</span>. <em>International Journal of Forecasting</em> 39 (4): 1518–47.
+</div>
+<div id="ref-zhou2025" class="csl-entry" role="listitem">
+Zhou, Zhi-Hua. 2025. <em>Ensemble methods: foundations and algorithms</em>. CRC press.
+</div>
+</div>
+</section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <p><img src="ppgec_logo.png" class="slide-logo"></p>
@@ -279,6 +2173,7 @@ Prof.&nbsp;Dr.&nbsp;João Fausto Lorenzato de Oliveira
   <script src="slides_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
   <script src="slides_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="slides_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
   <script src="slides_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -300,7 +2195,8 @@ Prof.&nbsp;Dr.&nbsp;João Fausto Lorenzato de Oliveira
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -471,7 +2367,7 @@ Prof.&nbsp;Dr.&nbsp;João Fausto Lorenzato de Oliveira
         },
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealMath,
           RevealNotes,
