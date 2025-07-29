@@ -150,7 +150,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-image="ppgec_poli.png" data-background-position="left 10% top 5%" data-background-size="20%" class="quarto-title-block center">
+<section id="title-slide" data-background-image="imagens/ppgec_poli.png" data-background-position="left 10% top 5%" data-background-size="20%" class="quarto-title-block center">
   <h1 class="title">Uma Análise Comparativa de Operadores de Combinação em <em>Ensembles</em> Heterogêneos para Previsão de Séries Temporais</h1>
 
 <div class="quarto-title-authors">
@@ -186,23 +186,40 @@ Prof.&nbsp;Dr.&nbsp;João Fausto Lorenzato de Oliveira
 </ul>
 </section>
 <section>
-<section id="introdução" class="title-slide slide level1 center">
+<section id="introdução" class="title-slide slide level1 center" data-background-color="#a0d5f6">
 <h1>Introdução</h1>
-
+<p><img data-src="imagens/forecast.png" class="absolute" style="top: 240px; left: 63px; height: 120px; "> <img data-src="imagens/fable.png" height="120"> <img data-src="imagens/tsibble.png" height="120"> <img data-src="imagens/feast.png" height="120"> <img data-src="imagens/fpp3.png" class="absolute" style="top: 240px; left: 180px; height: 120px; "></p>
 </section>
 <section id="estudos-de-forecasting" class="slide level2">
-<h2>Estudos de <em>Forecasting</em></h2>
+<h2>Estudos de <em>Forecasting</em> <img src="imagens/forecast.png" height="120px" style="vertical-align:middle;"></h2>
 <ul>
 <li class="fragment"><p>Crescimento da tomada de decisão baseada em dados;</p></li>
 <li class="fragment"><p>Previsão de séries temporais como ferramenta crucial;</p></li>
+<li class="fragment"><p>Exemplos:</p>
+<ol type="1">
+<li class="fragment">Previsão de Demanda no Varejo;</li>
+<li class="fragment">Previsão de Gastos Governamentais;</li>
+<li class="fragment">Previsão de Consumo de Energia.</li>
+</ol></li>
+</ul>
+</section>
+<section id="questões-importantes" class="slide level2">
+<h2>Questões Importantes <img src="imagens/fpp3.png" height="120px" style="vertical-align:middle;"></h2>
+<ul>
 <li class="fragment"><p>Limitações dos modelos individuais;</p></li>
 <li class="fragment"><p>Combinações de previsões como alternativa para ganho de acurácia;</p></li>
-<li class="fragment"><p>Fenômeno <em>forecast combination puzzle</em> e o dilema da complexidade.</p></li>
+<li class="fragment"><p>Há problemas em combinações? Por que algumas são melhores que outras?</p>
+<ol type="1">
+<li class="fragment">Má seleção de modelos individuais;</li>
+<li class="fragment">Baixa diversidade;</li>
+<li class="fragment">Complexidade.</li>
+</ol></li>
+<li class="fragment"><p>Fenômeno <em>forecast combination puzzle</em>.</p></li>
 </ul>
 <aside class="notes">
-<p>1- Governos, operadores do mercado, varegistas, todos se valem de previsões de séries temporais;</p>
-<p>2- A literatura vem mostrando que a opção de combinar geralmente é a melhor forma de aumentar acuárcia.</p>
-<p>3 -A pesar desse fenômeno curioso, só podemos, então aplicar a média simples? Não há outras formas como mostraram os autores citados.</p>
+<p>2- A literatura vem mostrando que a opção de combinar geralmente é a melhor forma de aumentar acuárcia. Mas qual tipo de combinação selecionar? todas são boas?</p>
+<p>3 - Todos combinadores têm resultados bons? lichtendahl e Winkler - má seleção, pooling; - baixa diversidade, alta correlação dos resíduos; - e complexidade, que pode aumenta o risco de acurácia</p>
+<p>4- A pesar desse fenômeno curioso, só podemos, então aplicar a média simples? Não há outras formas como mostraram os autores citados.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -216,19 +233,19 @@ Prof.&nbsp;Dr.&nbsp;João Fausto Lorenzato de Oliveira
       }</style></aside>
 </section>
 <section id="objetivo-geral" class="slide level2">
-<h2>Objetivo Geral</h2>
-<p>Analisar o desempenho de quatro combinares (média, mediana, operador proposto e SVR-stacking) para previsão de um passo à frente de séries temporais com sazonalidade mensal.</p>
+<h2>Objetivo Geral <img src="imagens/fable.png" height="120px" style="vertical-align:middle;"></h2>
+<p>Analisar o desempenho de quatro operadores (média, mediana, operador poderado proposto e SVR-<em>stacking</em>) para combinações heterogêneas aplicadas à previsão de um passo à frente de séries temporais com sazonalidade mensal.</p>
 </section>
 <section id="objetivos-específicos" class="slide level2">
-<h2>Objetivos Específicos</h2>
+<h2>Objetivos Específicos <img src="imagens/tsibble.png" height="120px" style="vertical-align:middle;"></h2>
 <ol type="1">
-<li class="fragment"><p>Comparar operadores (média, mediana, ponderada, <em>stacking</em>);</p></li>
+<li class="fragment"><p>Comparar operadores (média, mediana, média ponderada, <em>stacking</em>);</p></li>
 <li class="fragment"><p>Avaliar impacto do número de modelos nas combinações;</p></li>
 <li class="fragment"><p>Verificar robustez (desvio padrão) mediante o número de modelos adicionados;</p></li>
-<li class="fragment"><p>Avaliar método baseado em <em>feature importance</em>.</p></li>
+<li class="fragment"><p>Avaliar operador ponderado proposto baseado em <em>feature importance</em> do modelo Extremely Randomized Trees.</p></li>
 </ol>
 </section></section>
-<section id="fundamentação-teórica" class="title-slide slide level1 center">
+<section id="fundamentação-teórica" class="title-slide slide level1 center" data-background-color="#a0d5f6">
 <h1>Fundamentação Teórica</h1>
 
 </section>
@@ -236,18 +253,21 @@ Prof.&nbsp;Dr.&nbsp;João Fausto Lorenzato de Oliveira
 <section>
 <section id="trabalhos-relacionados" class="title-slide slide level1 center">
 <h1>Trabalhos Relacionados</h1>
-<div style="font-size: 85%;">
+<div style="font-size: 80%;">
 <ol type="1">
 <li>Alguns trabalhos usando operadores <strong>ponderados lineares</strong> conseguiram vencer a médias simples, como <span class="citation" data-cites="fforma">Montero-Manso et al. (<a href="#/referências" role="doc-biblioref" onclick="">2020</a>)</span>, <span class="citation" data-cites="kolassa2011">Kolassa (<a href="#/referências" role="doc-biblioref" onclick="">2011</a>)</span>, <span class="citation" data-cites="fiorucci2020groec">Fiorucci e Louzada (<a href="#/referências" role="doc-biblioref" onclick="">2020</a>)</span>, <span class="citation" data-cites="petropoulos2018bagging">Petropoulos, Hyndman, e Bergmeir (<a href="#/referências" role="doc-biblioref" onclick="">2018</a>)</span>.</li>
 <li>Com destaque para o trabalhos de <span class="citation" data-cites="fforma">Montero-Manso et al. (<a href="#/referências" role="doc-biblioref" onclick="">2020</a>)</span> que usou o XGBoost, que um <strong><em>ensemble</em> baseado em Árvores de Decisão</strong>, como modelos para estimar os pesos;</li>
-<li>O uso de FI é semelhante ao emprego dos coeficientes de regressão como pesos, mas há vantagens: <strong>sem multicolinearidade</strong> e <strong>lida melhor que outras formas de distribuições</strong>;</li>
-<li>O modelo ET lida bem com <strong>dados ruidosos</strong> (<span class="citation" data-cites="ghazwani2023computational">Ghazwani e Begum (<a href="#/referências" role="doc-biblioref" onclick="">2023</a>)</span>);</li>
-<li>E tem a <strong>variância menor</strong> que outros modelos como Random Forest <span class="citation" data-cites="geurts2006extratrees">Geurts, Ernst, e Wehenkel (<a href="#/referências" role="doc-biblioref" onclick="">2006</a>)</span>.</li>
+<li>O trabalho de <span class="citation" data-cites="granger1984">Granger e Ramanathan (<a href="#/referências" role="doc-biblioref" onclick="">1984</a>)</span> emprega os coeficientes de regressão como pesos para média, ou seja, os <span class="math inline">\(\beta\)</span>’s que <strong>explicam</strong> a regressão são usados.<br>
+</li>
+<li>O modelo ET lida bem com <strong>dados ruidosos</strong> (<span class="citation" data-cites="ghazwani2023computational">Ghazwani e Begum (<a href="#/referências" role="doc-biblioref" onclick="">2023</a>)</span>) e tem a <strong>variância menor</strong> que outros modelos como Random Forest (<span class="citation" data-cites="geurts2006extratrees">Geurts, Ernst, e Wehenkel (<a href="#/referências" role="doc-biblioref" onclick="">2006</a>)</span>).</li>
 </ol>
 </div>
 <aside class="notes">
 <p>Alguns trabalhos importantes da áreas que usaram esses operadores</p>
-<p>Falar um pouco deles</p>
+<p>1 - Exemplo de operadores ponderados que venceram a média simples, Cada um de uma forma. é possível usa quase todas as coisas que falam algo, quantitativamente, em relação a modelos pode ser usada como pesos</p>
+<p>2 - Esse sistema usou um sistema baseado em árvores</p>
+<p>3 - o trabalho de Granger inspirou por usar um modelos como estimador de pesos. Semelhante à regressão modelos de Árvore também possuem um técnica que os explica: o <em>feature importance</em>. Árvore, porém, têm mais vantagens: <strong>sem multicolinearidade</strong> e <strong>lida melhor que outras formas de distribuições</strong>;</p>
+<p>4 - agora por que usar o ET? As vantagem</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -267,7 +287,15 @@ Prof.&nbsp;Dr.&nbsp;João Fausto Lorenzato de Oliveira
 <li>Discretas ou contínuas;</li>
 <li>Univariádas ou multivariádas.</li>
 </ul>
+<div style="font-size: 150%;">
+<div class="callout callout-none no-icon callout-style-simple">
+<div class="callout-body">
+<div class="callout-content">
 <p>Este trabalho limita-se ao uso de séries discretas e univariádas.</p>
+</div>
+</div>
+</div>
+</div>
 <aside class="notes">
 <p>discretas ou contínuas em relação ao tempo vetor ou matriz da séries</p>
 <style type="text/css">
@@ -285,10 +313,26 @@ Prof.&nbsp;Dr.&nbsp;João Fausto Lorenzato de Oliveira
 <section id="combinações" class="slide level2">
 <h2>Combinações</h2>
 <ul>
+<li><p>Com elas conseguimos nos aproximar da função real e desconhecida que representa os dados, <span class="citation" data-cites="zhou2025">Zhou (<a href="#/referências" role="doc-biblioref" onclick="">2025</a>)</span>.</p></li>
 <li><p>A literatura vem acumulando dados que mostram a eficiência no emprego de combinações (<span class="citation" data-cites="clemen1989">Clemen (<a href="#/referências" role="doc-biblioref" onclick="">1989</a>)</span>, <span class="citation" data-cites="wang2023review">Wang et al. (<a href="#/referências" role="doc-biblioref" onclick="">2023</a>)</span>)</p></li>
 <li><p>Uso de combinações corrige os problemas de estimação com modelos individuais, <span class="citation" data-cites="makridakis_livro_1998">Makridakis, Wheelwright, e Hyndman (<a href="#/referências" role="doc-biblioref" onclick="">1998</a>)</span>;</p></li>
-<li><p>Com elas conseguimos nos aproximar da função real e desconhecida que representa os dados, <span class="citation" data-cites="zhou2025">Zhou (<a href="#/referências" role="doc-biblioref" onclick="">2025</a>)</span>.</p></li>
 </ul>
+<aside class="notes">
+<ol type="1">
+<li>De modo generalista, Zhou afirma que há um uma função que representa os dados, e pode ser impossível um modelo individual chegar nela, ma com combinações talvez;</li>
+<li>Mackidadkis foca nos modelos individuais, suas dificuldade, como o pressuposto de constância nos padrões e distribuição, não é o caso de séries reais</li>
+</ol>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="tipos-básicos-de-operadores" class="slide level2">
 <h2>Tipos Básicos de Operadores</h2>
@@ -298,22 +342,26 @@ Prof.&nbsp;Dr.&nbsp;João Fausto Lorenzato de Oliveira
 <div class="columns">
 <div class="column">
 <h3 id="tipos">Tipos</h3>
+<div class="goal">
 <ol type="1">
 <li>Treináveis;</li>
 <li>Não treináveis</li>
 <li>Meta-modelos</li>
 </ol>
+</div>
 </div><div class="column">
 <h3 id="usados-no-trabalho">Usados no Trabalho</h3>
+<div class="goal">
 <ul>
 <li>Média Simples</li>
 <li>Mediana</li>
 <li>Média Ponderada</li>
 <li><em>Stacking</em></li>
 </ul>
+</div>
 </div></div>
 <aside class="notes">
-<p>Falar dos modelos como pertencente a uma das classes Falar que o stackin usa SVR como meta-modelo com kernel RBF, modleo não linear</p>
+<p>Falar dos modelos como pertencente a uma das classes Falar que o stackin usa SVR como meta-modelo com kernel RBF, modelo não linear</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -327,7 +375,7 @@ Prof.&nbsp;Dr.&nbsp;João Fausto Lorenzato de Oliveira
       }</style></aside>
 </section></section>
 <section>
-<section id="metodologia" class="title-slide slide level1 center">
+<section id="metodologia" class="title-slide slide level1 center" data-background-color="#a0d5f6">
 <h1>Metodologia</h1>
 
 </section>
@@ -363,31 +411,48 @@ Prof.&nbsp;Dr.&nbsp;João Fausto Lorenzato de Oliveira
 <p><span class="math display">\[\begin{align}
         R_k = \frac{1}{M} \sum_{m=1}^{M} R_k(T_m)
 \end{align}\]</span></p>
+<aside class="notes">
+<p>ao final, um vetor com valor média cada de importância para a variável. No caso do trabalho, a variável é a predição dos modelos individuais.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="extremely-randomized-trees-et" class="slide level2">
 <h2>Extremely Randomized Trees (ET)</h2>
 <div class="columns" style="font-size: 90%;">
 <div class="column" style="width:50%;">
 <h3 id="características">Características</h3>
+<div class="goal">
 <ul>
-<li>É um ensemble de Árvore de Decisão sememlhante ao Random Forest;</li>
+<li>É um <em>ensemble</em> de Árvore de Decisão semelhante ao Random Forest;</li>
 <li>ET usa um amostra de colunas e com todas as linha;</li>
 <li>E, ao invés de verificar o valor ótimo que reduz a impureza de Gini/Entropia/MSE, escolhe aleatoriamente um valor limiar que represente a coluna.</li>
 </ul>
+</div>
 </div><div class="column" style="width:50%;">
 <h3 id="vantagens">Vantagens</h3>
+<div class="goal">
 <ul>
-<li>Mais rápida que os outros ensembles baseados em Árvore de Decisão;</li>
+<li>Mais rápida que os outros <em>ensembles</em> baseados em Árvore de Decisão;</li>
 <li>Lida bem com ruídos nos dados;</li>
 <li>Tem a variância mais baixa que o Random Forest.</li>
 </ul>
+</div>
 </div></div>
 </section>
 <section id="treino-e-teste-1" class="slide level2">
 <h2>Treino e Teste 1</h2>
 <ul>
 <li><p>Para avaliar os operadores foram usados 5 modelos estatísticos: ARIMA, ETS, CES, Theta e TBATS, e 4 de aprendizado de máquina: MLP, SVR, KNN e Random Forest;</p></li>
-<li><p>Os dados são 30 séries de sasonalidade mensal da Competição M3;</p></li>
+<li><p>Os dados são 30 séries de sazonalidade mensal da Competição M3;</p></li>
 <li><p>As séries são divididas em conjunto de treino e teste com as últimas 18 observações de cada série compondo o conjunto teste;</p></li>
 <li><p>As métricas de avaliação usadas são RMSE e SMAPE.</p></li>
 </ul>
@@ -425,15 +490,15 @@ Prof.&nbsp;Dr.&nbsp;João Fausto Lorenzato de Oliveira
 <section id="ferramentas-de-análise" class="slide level2">
 <h2>Ferramentas de Análise</h2>
 <ol type="1">
-<li><p>Uso de agrupamento médio dos resultados RMSE e SMAPE em relação ao número de métodos na combinação;</p></li>
-<li><p>Análise de Gráfico de Resultados;</p></li>
+<li><p>Uso de agrupamento (<em>group by</em>) médio dos resultados RMSE e SMAPE em relação ao número de métodos na combinação;</p></li>
+<li><p>Análise de Gráficos de Resultado Agrupado;</p></li>
 <li><p>Box Plots;</p></li>
-<li><p>Análise do Gráfico de Desvio Padrão;</p></li>
+<li><p>Análise de Gráficos de Desvio Padrão Agrupado;</p></li>
 <li><p>Diagrama de Distância Crítica.</p></li>
 </ol>
 </section></section>
 <section>
-<section id="resultados-individuais" class="title-slide slide level1 center">
+<section id="resultados-individuais" class="title-slide slide level1 center" data-background-color="#a0d5f6">
 <h1>Resultados Individuais</h1>
 
 </section>
@@ -1502,14 +1567,14 @@ Figura&nbsp;6
 </div>
 </section></section>
 <section>
-<section id="resultado-geral" class="title-slide slide level1 center">
+<section id="resultado-geral" class="title-slide slide level1 center" data-background-color="#a0d5f6">
 <h1>Resultado Geral</h1>
 
 </section>
 <section id="análise-geral-métrica-rmse" class="slide level2">
 <h2>Análise Geral Métrica RMSE</h2>
 <div class="panel-tabset">
-<ul id="tabset-6" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-6-1">Tabela RSME</a></li><li><a href="#tabset-6-2">Gráfico RMSE</a></li></ul>
+<ul id="tabset-6" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-6-1">Tabela RMSE</a></li><li><a href="#tabset-6-2">Gráfico RMSE</a></li></ul>
 <div class="tab-content">
 <div id="tabset-6-1">
 <div style="font-size: 80%;">
@@ -1743,7 +1808,7 @@ Figura&nbsp;8
 </div>
 </section></section>
 <section>
-<section id="box-plots-e-análise-de-dispersão" class="title-slide slide level1 center">
+<section id="box-plots-e-análise-de-dispersão" class="title-slide slide level1 center" data-background-color="#a0d5f6">
 <h1>Box Plots e Análise de Dispersão</h1>
 
 </section>
@@ -1921,6 +1986,19 @@ Figura&nbsp;10
 </div>
 </div>
 <div id="tabset-9-2">
+<aside class="notes">
+<p>usando a analogia do alvo e dos dardos, modelos com baixa variância/desvio padrão tendem a ser mais precisos em um determinado ponto. Reduzir a dispersão dos dados é diminuir o risco de acurácia (do inglês accuracy risk). definem risco de acurácia como o risco de sistemas gerarem previsões ruins (“the risk of a bad forecast”), os autores destacam que há uma relação entre variância e risco, em que ao diminuí-la, o risco dos modelos não performarem bem abranda-se.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <div id="fig-rmse-std-com-stack" class="quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-fig">
 <div aria-describedby="fig-rmse-std-com-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -2077,9 +2155,9 @@ Figura&nbsp;13
 <h2>Conclusão 1</h2>
 <ol type="1">
 <li><p>Combinações superam modelos individuais;</p></li>
-<li><p>Média ponderada com FI se destacou</p></li>
+<li><p>Média ponderada com FI se destacou;</p></li>
 <li><p>A mediana não apresentou resultados satisfatórios;</p></li>
-<li><p>O stacking obteve os piores resultados</p></li>
+<li><p>O stacking obteve os piores resultados;</p></li>
 <li><p>Resultados mostram, no contexto do trabalho, que quanto mais modelos combinados, maior é a acurácia e a robutez para média simples e média ponderada;</p></li>
 </ol>
 <aside class="notes">
@@ -2109,7 +2187,6 @@ Figura&nbsp;13
 <li>Testar o combinador em séries com sazonalidades diferentes;</li>
 <li>Verificar se em previsão de muitos passos a performance continua satisfatória;</li>
 <li>Explorar outros <em>ensembles</em> de Árvores como estimador de pesos;</li>
-<li>Verificar a seleção de modelos por correlação dos resíduos;</li>
 <li>Aplicar os operador em sistemas híbridos.</li>
 </ul>
 </section>
@@ -2131,6 +2208,9 @@ Geurts, Pierre, Damien Ernst, e Louis Wehenkel. 2006. <span>«Extremely randomiz
 </div>
 <div id="ref-ghazwani2023computational" class="csl-entry" role="listitem">
 Ghazwani, Mohammed, e M Yasmin Begum. 2023. <span>«Computational intelligence modeling of hyoscine drug solubility and solvent density in supercritical processing: Gradient boosting, extra trees, and random forest models»</span>. <em>Scientific Reports</em> 13 (1): 10046.
+</div>
+<div id="ref-granger1984" class="csl-entry" role="listitem">
+Granger, Clive W. J., e Ramu Ramanathan. 1984. <span>«Improved methods of combining forecasts»</span>. <em>Journal of Forecasting</em> 3 (2): 197–204. https://doi.org/<a href="https://doi.org/10.1002/for.3980030207">https://doi.org/10.1002/for.3980030207</a>.
 </div>
 <div id="ref-kolassa2011" class="csl-entry" role="listitem">
 Kolassa, Stephan. 2011. <span>«Combining exponential smoothing forecasts using Akaike weights»</span>. <em>International Journal of Forecasting</em> 27 (2): 238–51.
@@ -2160,7 +2240,7 @@ Zhou, Zhi-Hua. 2025. <em>Ensemble methods: foundations and algorithms</em>. CRC 
 </section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
-<p><img src="ppgec_logo.png" class="slide-logo"></p>
+<p><img src="imagens/ppgec_logo.png" class="slide-logo"></p>
 <div class="footer footer-default">
 
 </div>

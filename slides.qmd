@@ -2,7 +2,7 @@
 title: "Uma Análise Comparativa de Operadores de Combinação em *Ensembles* Heterogêneos para Previsão de Séries Temporais"
 
 title-slide-attributes:
-    data-background-image: ppgec_poli.png
+    data-background-image: imagens/ppgec_poli.png
     data-background-size: 20% 
     data-background-position: left 10% top 5%
 
@@ -23,10 +23,11 @@ author:
 bibliography: references.bib
 format: 
   revealjs:
-    logo: ppgec_logo.png
+    logo: imagens/ppgec_logo.png
     css: style.css
     slide-number: true
     chalkboard: true
+  
 
 
 ---
@@ -42,61 +43,92 @@ format:
 - Conclusão
 
 
-# Introdução 
+# Introdução {background-color="#a0d5f6"}
 
-## Estudos de *Forecasting*
+![](imagens/forecast.png){.absolute top=240 left=63 height="120px"}
+![](imagens/fable.png){ height="120px"}
+![](imagens/tsibble.png){ height="120px"}
+![](imagens/feast.png){ height="120px"}
+![](imagens/fpp3.png){.absolute top=240 left=180 height="120px"}
+
+
+## Estudos de *Forecasting* <img src="imagens/forecast.png" height="120px"  style="vertical-align:middle;">
+
 ::: {.incremental}
 * Crescimento da tomada de decisão baseada em dados;
 
 * Previsão de séries temporais como ferramenta crucial;
+* Exemplos:
+  1. Previsão de Demanda no Varejo;
+  2. Previsão de Gastos Governamentais;
+  3. Previsão de Consumo de Energia.
+:::
 
+
+
+## Questões Importantes <img src="imagens/fpp3.png" height="120px"  style="vertical-align:middle;">
+::: {.incremental}
 * Limitações dos modelos individuais;
 
 * Combinações de previsões como alternativa para ganho de acurácia;
 
-* Fenômeno *forecast combination puzzle* e o dilema da complexidade.
+* Há problemas em combinações? Por que algumas são melhores que outras?
+  
+  1. Má seleção de modelos individuais;
+  2. Baixa diversidade;
+  3. Complexidade.
+* Fenômeno *forecast combination puzzle*.
 :::
 
 ::: {.notes}
-1- Governos, operadores do mercado, varegistas, todos se valem de previsões de séries temporais;
+2- A literatura vem mostrando que a opção de combinar geralmente é a melhor forma de aumentar acuárcia. Mas qual tipo de combinação selecionar? todas são boas?
 
-2- A literatura vem mostrando que a opção de combinar geralmente é a melhor forma de aumentar acuárcia. 
+3 - Todos combinadores têm resultados bons? 
+lichtendahl e Winkler
+- má seleção, pooling;
+- baixa diversidade, alta correlação dos resíduos;
+- e complexidade, que pode aumenta o risco de acurácia
 
-3 -A pesar desse fenômeno curioso, só podemos, então aplicar a média simples? Não há outras formas como mostraram os autores citados. 
+4- A pesar desse fenômeno curioso, só podemos, então aplicar a média simples? Não há outras formas como mostraram os autores citados. 
 
 :::
 
-## Objetivo Geral
+## Objetivo Geral <img src="imagens/fable.png" height="120px"  style="vertical-align:middle;">
 
-Analisar o desempenho de quatro combinares (média, mediana, operador proposto e SVR-stacking) para previsão de um passo à frente de séries temporais com sazonalidade mensal.
+Analisar o desempenho de quatro operadores (média, mediana, operador poderado proposto e SVR-*stacking*) para combinações heterogêneas aplicadas à previsão de um passo à frente de séries temporais com sazonalidade mensal.
 
-## Objetivos Específicos
+## Objetivos Específicos <img src="imagens/tsibble.png" height="120px"  style="vertical-align:middle;">
 
 ::: {.incremental}
-1. Comparar operadores (média, mediana, ponderada, *stacking*);
+1. Comparar operadores (média, mediana, média ponderada, *stacking*);
 
 2. Avaliar impacto do número de modelos nas combinações;
 
 3. Verificar robustez (desvio padrão) mediante o número de modelos adicionados;
 
-4. Avaliar método baseado em *feature importance*.
+4. Avaliar operador ponderado proposto baseado em *feature importance* do modelo Extremely Randomized Trees.
 :::
 
 
-# Fundamentação Teórica
+# Fundamentação Teórica {background-color="#a0d5f6"}
 
 # Trabalhos Relacionados
-::: {style="font-size: 85%;"}
+::: {style="font-size: 80%;"}
 1. Alguns trabalhos usando operadores **ponderados lineares** conseguiram vencer a médias simples, como @fforma, @kolassa2011, @fiorucci2020groec, @petropoulos2018bagging.
 2. Com destaque para o trabalhos de @fforma que usou o XGBoost, que um ***ensemble* baseado em Árvores de Decisão**, como modelos para estimar os pesos;
-3. O uso de FI é semelhante ao emprego dos coeficientes de regressão como pesos, mas há vantagens: **sem multicolinearidade** e **lida melhor que outras formas de distribuições**;
-4. O modelo ET lida bem com **dados ruidosos** (@ghazwani2023computational);
-5. E tem a **variância menor** que outros modelos como Random Forest @geurts2006extratrees.
+3. O trabalho de @granger1984 emprega os coeficientes de regressão como pesos para média, ou seja, os $\beta$'s que **explicam** a regressão são usados.  
+4. O modelo ET lida bem com **dados ruidosos** (@ghazwani2023computational) e tem a **variância menor** que outros modelos como Random Forest (@geurts2006extratrees).
 :::
 ::: {.notes}
 Alguns trabalhos importantes da áreas que usaram esses operadores
 
-Falar um pouco deles
+1 - Exemplo de operadores ponderados que venceram a média simples, Cada um de uma forma. é possível usa quase todas as coisas que falam algo, quantitativamente, em relação a modelos pode ser usada como pesos
+
+2 - Esse sistema usou um sistema baseado em árvores
+
+3 - o trabalho de Granger inspirou por usar um modelos como estimador de pesos. Semelhante à regressão modelos de Árvore também possuem um técnica que os explica: o *feature importance*. Árvore, porém, têm mais vantagens: **sem multicolinearidade** e **lida melhor que outras formas de distribuições**;
+
+4 - agora por que usar o ET? As vantagem 
 :::
 
 ## Séries Temporais
@@ -106,7 +138,9 @@ Falar um pouco deles
 * Discretas ou contínuas;
 * Univariádas ou multivariádas.
 
+::: {.callout style="font-size: 150%;"}
 Este trabalho limita-se ao uso de séries discretas e univariádas.
+:::
 
 ::: {.notes}
 discretas ou contínuas em relação ao tempo
@@ -115,11 +149,17 @@ vetor ou matriz da séries
 
 ## Combinações
 
+* Com elas conseguimos nos aproximar da função real e desconhecida que representa os dados, @zhou2025.
+
 * A literatura vem acumulando dados que mostram a eficiência no emprego de combinações (@clemen1989, @wang2023review)
 
 * Uso de combinações corrige os problemas de estimação com modelos individuais, @makridakis_livro_1998;
 
-* Com elas conseguimos nos aproximar da função real e desconhecida que representa os dados, @zhou2025.
+::: {.notes}
+1. De modo generalista, Zhou afirma que há um uma função que representa os dados, e pode ser impossível um modelo individual chegar nela, ma com combinações talvez;
+2. Mackidadkis foca nos modelos individuais, suas dificuldade, como o pressuposto de constância nos padrões e distribuição, não é o caso de séries reais
+
+:::
 
 
 ## Tipos Básicos de Operadores
@@ -130,27 +170,31 @@ vetor ou matriz da séries
 
 ::: {.column}
 ### Tipos
+::: goal
 1. Treináveis;
 2. Não treináveis
 3. Meta-modelos
 :::
+:::
 
 ::: {.column}
 ### Usados no Trabalho
+::: goal
 * Média Simples
 * Mediana
 * Média Ponderada
 * *Stacking*
+:::
 :::
 ::::
 
 
 ::: {.notes}
 Falar dos modelos como pertencente a uma das classes
-Falar que o stackin usa SVR como meta-modelo com kernel RBF, modleo não linear
+Falar que o stackin usa SVR como meta-modelo com kernel RBF, modelo não linear
 :::
 
-# Metodologia
+# Metodologia {background-color="#a0d5f6"}
 
 ## Metodo Proposto
 
@@ -182,35 +226,38 @@ Falar que o stackin usa SVR como meta-modelo com kernel RBF, modleo não linear
 		R_k = \frac{1}{M} \sum_{m=1}^{M} R_k(T_m)
 \end{align}
 
+::: {.notes}
+ao final, um vetor com valor média cada de importância para a variável. No caso do trabalho, a variável é a predição dos modelos individuais.
+:::
 
 ## Extremely Randomized Trees (ET)
-
 
 :::: {.columns style="font-size: 90%;"}
 ::: {.column width="50%"}
 
 ### Características
-
-* É um ensemble de Árvore de Decisão sememlhante ao Random Forest;
+::: goal
+* É um *ensemble* de Árvore de Decisão semelhante ao Random Forest;
 * ET usa um amostra de colunas e com todas as linha;
 * E, ao invés de verificar o valor ótimo que reduz a impureza de Gini/Entropia/MSE, escolhe aleatoriamente um valor limiar que represente a coluna.
 :::
+:::
+
 ::: {.column width="50%"}
-
 ### Vantagens
-
-* Mais rápida que os outros ensembles baseados em Árvore de Decisão;
+::: goal
+* Mais rápida que os outros *ensembles* baseados em Árvore de Decisão;
 * Lida bem com ruídos nos dados;
 * Tem a variância mais baixa que o Random Forest.
 :::
+:::
 ::::
-
 
 ## Treino e Teste 1
 
 * Para avaliar os operadores foram usados 5 modelos estatísticos: ARIMA, ETS, CES, Theta e TBATS, e 4 de aprendizado de máquina: MLP, SVR, KNN e Random Forest;
 
-* Os dados são 30 séries de sasonalidade mensal da Competição M3;
+* Os dados são 30 séries de sazonalidade mensal da Competição M3;
 
 * As séries são divididas em conjunto de treino e teste com as últimas 18 observações de cada série compondo o conjunto teste;
 
@@ -254,7 +301,7 @@ Foram escolhidas duas métricas para não eviesar a análise com somente um e SM
 
 5. Diagrama de Distância Crítica.
 
-# Resultados Individuais
+# Resultados Individuais {background-color="#a0d5f6"}
 
 ## N1402 
 
@@ -509,12 +556,12 @@ Foram escolhidas duas métricas para não eviesar a análise com somente um e SM
 :::
 
 
-# Resultado Geral
+# Resultado Geral {background-color="#a0d5f6"}
 
 ## Análise Geral Métrica RMSE
 ::: {.panel-tabset}
 
-### Tabela RSME
+### Tabela RMSE
 
 ::: {style="font-size: 80%;"}
 | Nº Modelos | Média   | Mediana | Média Ponderada | SVR-*stacking*|
@@ -567,7 +614,7 @@ Foram escolhidas duas métricas para não eviesar a análise com somente um e SM
 
 :::
 
-# Box Plots e Análise de Dispersão
+# Box Plots e Análise de Dispersão {background-color="#a0d5f6"}
 
 ## Box Plots
 ::: {.panel-tabset}
@@ -615,6 +662,11 @@ As distribuições dos modelos não são iguais, o que é indicativo de performa
 
 ### Gráf. RMSE
 
+::: {.notes}
+ usando a analogia do alvo e dos dardos, modelos com baixa variância/desvio
+padrão tendem a ser mais precisos em um determinado ponto. Reduzir a dispersão dos dados é diminuir o risco de acurácia (do inglês accuracy risk). definem risco de acurácia como o risco de sistemas gerarem previsões ruins ("the risk of a bad forecast"), os autores destacam que há uma relação entre variância e risco, em que ao diminuí-la, o risco dos modelos não performarem bem abranda-se.
+:::
+
 ![Desvio Padrão RMSE](imagens/std-rmse.png){#fig-rmse-std-com-stack}
 
 ### Tab. SMAPE
@@ -655,11 +707,11 @@ O teste foi feito com 5% de nível significância mostrando claramente a diferen
 
 1. Combinações superam modelos individuais;
 
-2. Média ponderada com FI se destacou
+2. Média ponderada com FI se destacou;
 
 3. A mediana não apresentou resultados satisfatórios;
 
-4. O stacking obteve os piores resultados
+4. O stacking obteve os piores resultados;
 
 5. Resultados mostram, no contexto do trabalho, que quanto mais modelos combinados, maior é a acurácia e a robutez para média simples e média ponderada;
 
@@ -683,7 +735,6 @@ O teste foi feito com 5% de nível significância mostrando claramente a diferen
 - Testar o combinador em séries com sazonalidades diferentes;
 - Verificar se em previsão de muitos passos a performance continua satisfatória;
 - Explorar outros *ensembles* de Árvores como estimador de pesos;
-- Verificar a seleção de modelos por correlação dos resíduos;
 - Aplicar os operador em sistemas híbridos.
 
 ## Referências
