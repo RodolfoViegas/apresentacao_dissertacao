@@ -50,6 +50,7 @@ format:
 ![](imagens/tsibble.png){ height="120px"}
 ![](imagens/feast.png){ height="120px"}
 ![](imagens/fpp3.png){.absolute top=240 left=180 height="120px"}
+![](imagens/smooth.png){.absolute top=240 left=295 height="120px"}
 
 
 ## Estudos de *Forecasting* <img src="imagens/forecast.png" height="120px"  style="vertical-align:middle;">
@@ -112,7 +113,7 @@ Analisar o desempenho de quatro operadores (média, mediana, operador poderado p
 
 # Fundamentação Teórica {background-color="#a0d5f6"}
 
-# Trabalhos Relacionados
+## Trabalhos Relacionados <img src="imagens/smooth.png" height="120px"  style="vertical-align:middle;">
 ::: {style="font-size: 80%;"}
 1. Alguns trabalhos usando operadores **ponderados lineares** conseguiram vencer a médias simples, como @fforma, @kolassa2011, @fiorucci2020groec, @petropoulos2018bagging.
 2. Com destaque para o trabalhos de @fforma que usou o XGBoost, que um ***ensemble* baseado em Árvores de Decisão**, como modelos para estimar os pesos;
